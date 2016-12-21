@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.luolc.emojirain.EmojiRainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_emoji_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ab__gray_light"
+    app:dropDuration="2400"
+    app:dropFrequency="500"
+    app:duration="7200"
+    app:per="10">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="输入圣诞快乐试试..."
+            android:padding="20dp"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+
+        <me.james.biuedittext.BiuEditText
+            android:id="@+id/et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:padding="20dp"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+    </RelativeLayout>
+</com.luolc.emojirain.EmojiRainLayout>

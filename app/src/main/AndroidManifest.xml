@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.administrator.demo">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/refresh_head_arrow"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".recycleView.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".PickViewActivity" />
+        <activity android:name=".PopuActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".simpletooltip.EmojiRainActivity"></activity>
+
+        <activity android:name=".boomMenu.MainBoomMenuActivity" />
+        <activity android:name=".boomMenu.ListViewActivity" />
+        <activity android:name=".boomMenu.SimpleCircleButtonActivity" />
+        <activity android:name=".boomMenu.ButtonPlaceAlignmentActivity" />
+        <activity android:name=".boomMenu.TextInsideCircleButtonActivity" />
+        <activity android:name=".boomMenu.TextOutsideCircleButtonActivity" />
+        <activity android:name=".boomMenu.BoomExampleActivity" />
+        <activity android:name=".boomMenu.OrderExampleActivity" />
+        <activity android:name=".boomMenu.HamButtonActivity" />
+        <activity android:name=".boomMenu.ActionBarActivity" />
+        <activity android:name=".boomMenu.EaseActivity" />
+        <activity android:name=".boomMenu.ListenerActivity" />
+        <activity android:name=".boomMenu.ControlActivity" />
+        <activity android:name=".boomMenu.ShareActivity" />
+        <activity android:name=".boomMenu.FragmentActivity" />
+        <activity android:name=".boomMenu.RecyclerViewActivity"></activity>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wangjie.androidbucket.support.cardview.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
+        android:textAllCaps="false"
+        android:background="@color/white"
+        android:text="item"
+        android:backgroundTint="#ccaacc"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+</com.wangjie.androidbucket.support.cardview.CardView>
