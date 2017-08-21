@@ -115,24 +115,24 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             case Gravity.LEFT:
                 setOrientation(HORIZONTAL);
                 addView(text, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                arrow.setImageResource(R.drawable.ic_arrow_right);
+                arrow.setImageResource(R.mipmap.ic_arrow_right);
                 addView(arrow, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 break;
             case Gravity.RIGHT:
                 setOrientation(HORIZONTAL);
-                arrow.setImageResource(R.drawable.ic_arrow_left);
+                arrow.setImageResource(R.mipmap.ic_arrow_left);
                 addView(arrow, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 addView(text, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 break;
             case Gravity.TOP:
                 setOrientation(VERTICAL);
                 addView(text, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                arrow.setImageResource(R.drawable.ic_arrow_down);
+                arrow.setImageResource(R.mipmap.ic_arrow_down);
                 addView(arrow, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 break;
             case Gravity.BOTTOM:
                 setOrientation(VERTICAL);
-                arrow.setImageResource(R.drawable.ic_arrow_up);
+                arrow.setImageResource(R.mipmap.ic_arrow_up);
                 addView(arrow, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 addView(text, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 break;
@@ -151,7 +151,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
      */
     @UiThread
     public void show() {
-        ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(
+        MarginLayoutParams layoutParams = new MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         parentView.addView(this, layoutParams);
 
@@ -238,7 +238,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
 
         // TODO supports Gravity.NO_GRAVITY
         if (gravity == Gravity.TOP || gravity == Gravity.BOTTOM) {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
+            MarginLayoutParams layoutParams = (MarginLayoutParams) getLayoutParams();
             if (gravity == Gravity.TOP) {
                 layoutParams.topMargin = anchorTop - height;
             } else {
@@ -256,7 +256,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             setLayoutParams(layoutParams);
 
             // align the arrow to the horizontal center of the anchor view
-            layoutParams = (ViewGroup.MarginLayoutParams) arrow.getLayoutParams();
+            layoutParams = (MarginLayoutParams) arrow.getLayoutParams();
             layoutParams.leftMargin = anchorHorizontalCenter - leftMargin - arrow.getWidth() / 2;
             arrow.setLayoutParams(layoutParams);
 
@@ -264,7 +264,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             pivotY = gravity == Gravity.TOP ? height - arrow.getHeight() : 0.0F;
         } else {
             // gravity == Gravity.LEFT || gravity == Gravity.RIGHT
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
+            MarginLayoutParams layoutParams = (MarginLayoutParams) getLayoutParams();
             if (gravity == Gravity.LEFT) {
                 layoutParams.rightMargin = parentWidth - anchorLeft;
                 layoutParams.leftMargin = Math.max(0, anchorLeft - width);
@@ -285,7 +285,7 @@ public class ToolTipView extends LinearLayout implements ViewTreeObserver.OnPreD
             setLayoutParams(layoutParams);
 
             // align the arrow to the vertical center of the anchor view
-            layoutParams = (ViewGroup.MarginLayoutParams) arrow.getLayoutParams();
+            layoutParams = (MarginLayoutParams) arrow.getLayoutParams();
             layoutParams.topMargin = anchorVerticalCenter - topMargin - arrow.getHeight() / 2;
             arrow.setLayoutParams(layoutParams);
 

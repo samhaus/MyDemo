@@ -17,22 +17,22 @@ import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 public class BuilderManager {
 
     private static int[] imageResources = new int[]{
-            R.drawable.bat,
-            R.drawable.bear,
-            R.drawable.bee,
-            R.drawable.butterfly,
-            R.drawable.cat,
-            R.drawable.deer,
-            R.drawable.dolphin,
-            R.drawable.eagle,
-            R.drawable.horse,
-            R.drawable.jellyfish,
-            R.drawable.owl,
-            R.drawable.peacock,
-            R.drawable.pig,
-            R.drawable.rat,
-            R.drawable.snake,
-            R.drawable.squirrel
+            R.mipmap.bat,
+            R.mipmap.bear,
+            R.mipmap.bee,
+            R.mipmap.butterfly,
+            R.mipmap.cat,
+            R.mipmap.deer,
+            R.mipmap.dolphin,
+            R.mipmap.eagle,
+            R.mipmap.horse,
+            R.mipmap.jellyfish,
+            R.mipmap.owl,
+            R.mipmap.peacock,
+            R.mipmap.pig,
+            R.mipmap.rat,
+            R.mipmap.snake,
+            R.mipmap.squirrel
     };
 
     private static int imageResourceIndex = 0;

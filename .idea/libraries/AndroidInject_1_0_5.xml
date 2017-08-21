@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="AndroidInject-1.0.5">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.wangjiegulu/AndroidInject/1.0.5/res" />
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.wangjiegulu/AndroidInject/1.0.5/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/eb3954b982f340067325639b97107d84f1af6820/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/eb3954b982f340067325639b97107d84f1af6820/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

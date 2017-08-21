@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.administrator.demo">
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- windowManager用到的权限以及服务等 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
     <application
+        android:name=".application.App"
         android:allowBackup="true"
         android:icon="@mipmap/refresh_head_arrow"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:overrideLibrary="com.airbnb.lottie"
+        tools:replace="android:allowBackup,icon,label,theme">
+        <service android:name=".WindowMgrDemo.WindowService" />
+
         <activity android:name=".recycleView.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,9 +32,10 @@
         </activity>
         <activity android:name=".PickViewActivity" />
         <activity android:name=".PopuActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".simpletooltip.EmojiRainActivity"></activity>
-
+        <activity android:name=".TagViewActivity" />
+        <activity
+            android:name=".simpletooltip.EmojiRainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".boomMenu.MainBoomMenuActivity" />
         <activity android:name=".boomMenu.ListViewActivity" />
         <activity android:name=".boomMenu.SimpleCircleButtonActivity" />
@@ -35,8 +51,21 @@
         <activity android:name=".boomMenu.ControlActivity" />
         <activity android:name=".boomMenu.ShareActivity" />
         <activity android:name=".boomMenu.FragmentActivity" />
-        <activity android:name=".boomMenu.RecyclerViewActivity"></activity>
-
+        <activity android:name=".boomMenu.RecyclerViewActivity" />
+        <activity android:name=".swipeCaptchaDemo.swipeCaptchaActivity" />
+        <activity
+            android:name=".realmDemo.AddDataActivity"
+            android:label="@string/title_activity_add_data" />
+        <activity android:name=".WindowMgrDemo.WindowMgrActivity" />
+        <activity android:name=".lottieDemo.LottieDemoActivity" />
+        <activity android:name=".BiliDemo.BiliActivity"></activity>
+        <activity
+            android:name=".indexListview.MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity android:name=".EmptyLoadRetryDemo.test.MainActivity"></activity>
+        <activity android:name=".EmptyLoadRetryDemo.test.FragmentTestActivity"></activity>
+        <activity android:name=".EmptyLoadRetryDemo.test.AnyViewTestActivity"></activity>
+        <activity android:name=".EmptyLoadRetryDemo.test.CategoryActivity"></activity>
     </application>
 
 </manifest>

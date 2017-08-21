@@ -29,7 +29,6 @@ public class RvAdapter extends RecyclerView.Adapter {
 
     public interface ItemClickListener {
         void onItemClick(int Pos);
-
         void OnItemLongClick(int Pos);
     }
 
