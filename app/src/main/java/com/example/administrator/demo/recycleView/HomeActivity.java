@@ -10,8 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import com.example.administrator.demo.BiliDemo.BiliActivity;
 import com.example.administrator.demo.EmptyLoadRetryDemo.test.CategoryActivity;
@@ -27,12 +29,15 @@ import com.example.administrator.demo.recycleView.RvAdapter.ItemClickListener;
 import com.example.administrator.demo.simpletooltip.EmojiRainActivity;
 import com.example.administrator.demo.swipeCaptchaDemo.swipeCaptchaActivity;
 import com.example.administrator.demo.util.AppManager;
+import com.example.administrator.demo.util.LogUtil;
+import com.example.administrator.demo.util.RVItemTouchHelper;
 import com.example.administrator.demo.util.TimeUtil;
 import com.example.administrator.demo.util.ToastUtil;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,6 +52,8 @@ public class HomeActivity extends Activity {
 
     private TwinklingRefreshLayout refreshLayout;
     private long preTime;
+
+    private RVItemTouchHelper itemTouchHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,7 +88,7 @@ public class HomeActivity extends Activity {
 
     public void initView() {
         Toolbar title = (Toolbar) findViewById(R.id.title);
-        title.setTitle("Samhuas");
+        title.setTitle("Samhaus");
         title.setTitleTextColor(getResources().getColor(R.color.white));
         title.setBackgroundColor(getResources().getColor(R.color.blue));
         final RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
@@ -167,7 +174,8 @@ public class HomeActivity extends Activity {
 
             @Override
             public void OnItemLongClick(int Pos) {
-                Log.e(TAG, "OnItemLongClick: --------------" + Pos);
+                LogUtil.e(TAG, "OnItemLongClick: --------------" + Pos);
+                itemTouchHelper.startDrag(rv.getChildViewHolder(rv.getChildAt(Pos)));
             }
         });
 
@@ -200,6 +208,73 @@ public class HomeActivity extends Activity {
 
             }
         });
+
+        //处理RV移动item移动操作
+        itemTouchHelper = new RVItemTouchHelper(new ItemTouchHelper.Callback() {
+            int dragFlags;//设定的拖拽方向
+            int swipFlags;//设定的能滑动方向
+
+            //设置处理rv的item是否滑动拖动以及移动操作的方向
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                //判断rv布局管理器数据
+                if (rv.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+                    dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN |
+                            ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+
+                    swipFlags = 0;//不滑动
+                }
+                return makeMovementFlags(dragFlags, swipFlags);
+            }
+
+            //item拖动过程中调用
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder viewHolder1) {
+
+                int oldPosition = viewHolder.getAdapterPosition();//旧的位置
+                int newPosition = viewHolder1.getAdapterPosition();//新的位置
+                if (oldPosition < newPosition) {
+                    for (int i = oldPosition; i < newPosition; i++) {
+                        Collections.swap(list, i, i + 1);
+                    }
+                } else {
+                    for (int i = oldPosition; i > newPosition; i--) {
+                        Collections.swap(list, i, i - 1);
+                    }
+                }
+                rvAdapter.notifyDataSetChanged();
+                return true;
+            }
+
+            //滑动消失后调用
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+
+            //打开长按效果
+//            @Override
+//            public boolean isLongPressDragEnabled() {
+//                LogUtil.e("我是长按");
+//                return false;
+//            }
+
+            //最后要刷新适配器
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                rvAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+
+                LogUtil.e("测试有没有长按选中--"+actionState);
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(rv);
+
     }
 
     /**
