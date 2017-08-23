@@ -1,9 +1,12 @@
 package com.example.administrator.demo.recycleView;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +14,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 
 import com.example.administrator.demo.BiliDemo.BiliActivity;
 import com.example.administrator.demo.EmptyLoadRetryDemo.test.CategoryActivity;
@@ -33,12 +39,15 @@ import com.example.administrator.demo.util.LogUtil;
 import com.example.administrator.demo.util.RVItemTouchHelper;
 import com.example.administrator.demo.util.TimeUtil;
 import com.example.administrator.demo.util.ToastUtil;
+import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 作者：LSH on 2016/12/2 0002 11:12
@@ -48,7 +57,7 @@ public class HomeActivity extends Activity {
     private static final String TAG = "HomeActivity";
 
     private RvAdapter rvAdapter;
-    private List list;
+    private List<HomeListBean> list;
 
     private TwinklingRefreshLayout refreshLayout;
     private long preTime;
@@ -59,6 +68,9 @@ public class HomeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        //导航栏  底部  防止被虚拟按键遮住
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         initDate();
         initView();
@@ -66,33 +78,30 @@ public class HomeActivity extends Activity {
 
     public void initDate() {
         list = new ArrayList<>();
-        list.add("切换布局");
-        list.add("不同位置的popuwindow");
-        list.add("TagView流式标签");
-        list.add("神奇的输入框");
-        list.add("仿苹果底部弹出筛选框");
-        list.add("神奇的弹出菜单");
-        list.add("数据存储Realm");
-        list.add("自定义的悬浮层");
-        list.add("AirBnb的开源动画库");
-        list.add("仿斗鱼滑动验证码");
-        list.add("b站开源直播以及弹幕");
-        list.add("仿通讯录");
-        list.add("空布局emptyLayout");
+        list.add(new HomeListBean("切换布局", 0));
+        list.add(new HomeListBean("不同位置的popuwindow", 1));
+        list.add(new HomeListBean("TagView流式标签", 2));
+        list.add(new HomeListBean("神奇的输入框", 3));
+        list.add(new HomeListBean("仿苹果底部弹出筛选框", 4));
+        list.add(new HomeListBean("神奇的弹出菜单", 5));
+        list.add(new HomeListBean("数据存储Realm", 6));
+        list.add(new HomeListBean("自定义的悬浮层", 7));
+        list.add(new HomeListBean("AirBnb的开源动画库", 8));
+        list.add(new HomeListBean("仿斗鱼滑动验证码", 9));
+        list.add(new HomeListBean("b站开源直播以及弹幕", 10));
+        list.add(new HomeListBean("仿通讯录", 11));
+        list.add(new HomeListBean("空布局emptyLayout", 12));
 
 
-        for (int i = 'A'; i < 'Z'; i++) {
-            list.add((char) i);
-        }
+//        for (int i = 'A'; i < 'Z'; i++) {
+//            HomeListBean bean = new HomeListBean((char) i);
+//        }
     }
 
     public void initView() {
-        Toolbar title = (Toolbar) findViewById(R.id.title);
-        title.setTitle("Samhaus");
-        title.setTitleTextColor(getResources().getColor(R.color.white));
-        title.setBackgroundColor(getResources().getColor(R.color.blue));
+
         final RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
-        //设置布局方式
+        //设置rv布局方式
         final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         final GridLayoutManager layoutManager2 = new GridLayoutManager(this, 2);
         final StaggeredGridLayoutManager layoutManager3 = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
@@ -120,7 +129,7 @@ public class HomeActivity extends Activity {
         rvAdapter.setOnclicListener(new ItemClickListener() {
             @Override
             public void onItemClick(int Pos) {
-                switch (Pos) {
+                switch (list.get(Pos).getPos()) {
                     case 0:
                         if (rv.getLayoutManager() == layoutManager) {
                             rv.setLayoutManager(layoutManager2);
@@ -179,17 +188,40 @@ public class HomeActivity extends Activity {
             }
         });
 
-        refreshLayout = new TwinklingRefreshLayout(this);
-//        refreshLayout.setEnableOverScroll(true);//是否允许越界回弹。
-//        refreshLayout.setFloatRefresh(true);//支持切换到像SwipeRefreshLayout一样的悬浮刷新模式了
+        AppBarLayout bar = (AppBarLayout) findViewById(R.id.bar);
+        bar.setBackgroundColor(getResources().getColor(R.color.blue));
+        //添加滑动偏移监听
+        bar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset >= 0) {
+                    refreshLayout.setEnableRefresh(true);
+                    refreshLayout.setEnableOverScroll(false);
+                } else {
+                    refreshLayout.setEnableRefresh(false);
+                    refreshLayout.setEnableOverScroll(false);
+                }
+            }
+        });
+
+        refreshLayout = (TwinklingRefreshLayout) findViewById(R.id.refreshLayout);
+        //更换默认head
+        ProgressLayout header = new ProgressLayout(this);
+        refreshLayout.setHeaderView(header);
+        refreshLayout.setHeaderHeight(140);
+        refreshLayout.setMaxHeadHeight(240);
+        //设置coordinate以后设置需要刷新的view
+        refreshLayout.setTargetView(rv);
+
+        refreshLayout.setEnableOverScroll(true);//是否允许越界回弹
+        refreshLayout.setFloatRefresh(true);//支持切换到像SwipeRefreshLayout一样的悬浮刷新模式
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                super.onRefresh(refreshLayout);
-                refreshLayout.postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e(TAG, "run: ------下拉刷新");
+                        LogUtil.e(TAG, "run: ------下拉刷新");
                         refreshLayout.finishRefreshing();
                     }
                 }, 2000);
@@ -201,7 +233,7 @@ public class HomeActivity extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e(TAG, "run: ------上拉加载");
+                        LogUtil.e(TAG, "run: ------上拉加载");
                         refreshLayout.finishLoadmore();
                     }
                 }, 2000);
@@ -270,10 +302,11 @@ public class HomeActivity extends Activity {
             public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
                 super.onSelectedChanged(viewHolder, actionState);
 
-                LogUtil.e("测试有没有长按选中--"+actionState);
+                LogUtil.e("测试有没有长按选中--" + actionState);
             }
         });
         itemTouchHelper.attachToRecyclerView(rv);
+
 
     }
 

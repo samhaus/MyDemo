@@ -18,7 +18,7 @@ public class RvAdapter extends RecyclerView.Adapter {
 
     private LayoutInflater layoutInflater;
     private Context context;
-    private List list;
+    private List<HomeListBean> list;
     private ItemClickListener itemClickListener;
 
     public RvAdapter(Context context, List list) {
@@ -29,6 +29,7 @@ public class RvAdapter extends RecyclerView.Adapter {
 
     public interface ItemClickListener {
         void onItemClick(int Pos);
+
         void OnItemLongClick(int Pos);
     }
 
@@ -47,7 +48,7 @@ public class RvAdapter extends RecyclerView.Adapter {
     //点击增加item
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tv.setText(list.get(position).toString());
+        ((MyViewHolder) holder).tv.setText(list.get(position).getItemName().toString());
 
         ((MyViewHolder) holder).tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +76,7 @@ public class RvAdapter extends RecyclerView.Adapter {
     }
 
     public void addData(int position) {
-        list.add(position, "Insert");
+        list.add(position, new HomeListBean("Insert", position));
         notifyItemInserted(position);
     }
 
