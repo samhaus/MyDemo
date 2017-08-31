@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">A LSH的demo</string>
+    <string name="app_name">Samhaus</string>
 
     <string name="msg_exit_tow_click_app">再按一次退出应用</string>
 
@@ -43,17 +43,20 @@
     <string name="title_activity_add_data">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
+    <string name="prompt_email">邮箱</string>
+    <string name="prompt_password">密码(optional)</string>
+    <string name="action_sign_in">登录或注册</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="error_invalid_email">邮箱已注册</string>
+    <string name="error_invalid_password">密码太短换一个吧</string>
+    <string name="error_incorrect_password">密码好像不对哦</string>
+    <string name="error_field_required">必填项哦d</string>
+    <string name="permission_rationale">"请提供电子邮件以获取联系人权限"
     </string>
 
+    <string name="VideoView_error_text_invalid_progressive_playback">无效的连续播放</string>
+    <string name="VideoView_error_text_unknown">未知错误</string>
+    <string name="VideoView_error_button">OK</string>
 
+    <string name="task_img_storage_err">无法保存照片，请检查SD卡是否挂载</string>
 </resources>

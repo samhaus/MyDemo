@@ -1,5 +1,6 @@
 package com.example.administrator.demo.util;
 
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
@@ -414,4 +415,12 @@ public class StringUtil {
         objectInputStream.close();
         return SceneList;
     }
+
+    /**
+     * String非空判断
+     */
+    public static String isNull(String string) {
+        return TextUtils.isEmpty(string) ? "" : string;
+    }
+
 }

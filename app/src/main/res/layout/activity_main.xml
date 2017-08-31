@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.administrator.demo.tagview.TagView
+    <com.example.administrator.demo.tagView.TagView
         android:id="@+id/tagview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,6 +14,6 @@
         app:textPaddingBottom="5dp"
         app:textPaddingLeft="8dp"
         app:textPaddingRight="8dp"
-        app:textPaddingTop="5dp"></com.example.administrator.demo.tagview.TagView>
+        app:textPaddingTop="5dp"></com.example.administrator.demo.tagView.TagView>
 
 </LinearLayout>

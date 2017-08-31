@@ -8,4 +8,6 @@
     <dimen name="index_bar_view_text_size">12sp</dimen>
     <dimen name="index_bar_view_width">20dp</dimen>
     <dimen name="index_bar_view_margin">10dp</dimen>
+
+    <dimen name="media_control_height">50dp</dimen>
 </resources>

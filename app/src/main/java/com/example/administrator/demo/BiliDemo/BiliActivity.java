@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.VideoView;
 
 import com.example.administrator.demo.R;
+import com.example.administrator.demo.base.BaseActivity;
 
 import java.util.Random;
 
@@ -22,7 +23,7 @@ import master.flame.danmaku.danmaku.model.android.Danmakus;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.ui.widget.DanmakuView;
 
-public class BiliActivity extends AppCompatActivity {
+public class BiliActivity extends BaseActivity {
 
     //是否显示弹幕
     private boolean showDanmaku;
@@ -39,10 +40,18 @@ public class BiliActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bili);
+    public int generateLayout() {
+        return R.layout.activity_bili;
+    }
 
+
+    @Override
+    public void initData(Bundle bundle) {
+
+    }
+
+    @Override
+    public void initView() {
         VideoView vv = (VideoView) findViewById(R.id.vv);
         vv.setVideoURI(Uri.parse("http://nb1232-hc38.aipai.com/user/696/37872696/1004/card/44649502/card.mp4?l=g&to=aipai"));
         vv.start();
@@ -93,22 +102,22 @@ public class BiliActivity extends AppCompatActivity {
     }
 
     //沉浸式布局
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-            getSupportActionBar().hide();
-        }
-    }
-
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
+//            View decorView = getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(
+//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//            getSupportActionBar().hide();
+//        }
+//    }
+//  
     /**
      * 向弹幕View中添加一条弹幕
      *

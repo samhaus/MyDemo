@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="activity"
+            type="com.example.administrator.demo.VRPlayerDemo.activity.VRPlayerActivity" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.example.administrator.demo.VRPlayerDemo.vr.VRPlayerView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+        <RelativeLayout
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:background="@color/blue"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_marginTop="3dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:clickable="true"
+                android:onClick="@{()-> activity.onBackClick()}"
+                android:src="@mipmap/ic_back" />
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

@@ -29,7 +29,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipChildren="false"
+                android:theme="@style/AppTheme.AppBarOverlay"
                 app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleGravity="right|bottom"
+                app:expandedTitleMargin="20dp"
                 app:expandedTitleMarginStart="10dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -44,8 +47,9 @@
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/photo3"
-                    app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="1" />
+                    app:layout_collapseMode="pin"
+                    app:layout_collapseParallaxMultiplier="0.5"
+                    app:layout_scrollFlags="scroll|enterAlways" />
 
 
                 <android.support.v7.widget.Toolbar
@@ -55,8 +59,7 @@
                     android:textSize="20sp"
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="scroll|enterAlways"
-                    app:title="Samhaus"
-                    app:titleTextColor="@color/white" />
+                    app:title="Samhaus" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>

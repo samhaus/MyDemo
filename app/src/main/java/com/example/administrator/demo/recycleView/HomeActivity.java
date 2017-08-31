@@ -1,9 +1,6 @@
 package com.example.administrator.demo.recycleView;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -12,22 +9,18 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.WindowManager;
 
 import com.example.administrator.demo.BiliDemo.BiliActivity;
-import com.example.administrator.demo.EmptyLoadRetryDemo.test.CategoryActivity;
-import com.example.administrator.demo.PickViewActivity;
-import com.example.administrator.demo.PopuActivity;
+import com.example.administrator.demo.VRPlayerDemo.activity.VRListActivity;
+import com.example.administrator.demo.emptyLoadRetryDemo.test.CategoryActivity;
+import com.example.administrator.demo.activity.PickViewActivity;
+import com.example.administrator.demo.activity.PopuActivity;
 import com.example.administrator.demo.R;
-import com.example.administrator.demo.TagViewActivity;
+import com.example.administrator.demo.activity.TagViewActivity;
 import com.example.administrator.demo.WindowMgrDemo.WindowMgrActivity;
+import com.example.administrator.demo.base.BaseActivity;
 import com.example.administrator.demo.boomMenu.MainBoomMenuActivity;
 import com.example.administrator.demo.indexListview.MainActivity;
 import com.example.administrator.demo.lottieDemo.LottieDemoActivity;
@@ -39,7 +32,6 @@ import com.example.administrator.demo.util.LogUtil;
 import com.example.administrator.demo.util.RVItemTouchHelper;
 import com.example.administrator.demo.util.TimeUtil;
 import com.example.administrator.demo.util.ToastUtil;
-import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
@@ -47,14 +39,11 @@ import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 作者：LSH on 2016/12/2 0002 11:12
  */
-public class HomeActivity extends Activity {
-
-    private static final String TAG = "HomeActivity";
+public class HomeActivity extends BaseActivity {
 
     private RvAdapter rvAdapter;
     private List<HomeListBean> list;
@@ -65,21 +54,21 @@ public class HomeActivity extends Activity {
     private RVItemTouchHelper itemTouchHelper;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        //导航栏  底部  防止被虚拟按键遮住
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        initDate();
-        initView();
+    public int generateLayout() {
+        return R.layout.activity_home;
     }
 
-    public void initDate() {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
+    @Override
+    public void initData(Bundle bundle) {
         list = new ArrayList<>();
         list.add(new HomeListBean("切换布局", 0));
-        list.add(new HomeListBean("不同位置的popuwindow", 1));
+        list.add(new HomeListBean("不同位置的PopuWindow", 1));
         list.add(new HomeListBean("TagView流式标签", 2));
         list.add(new HomeListBean("神奇的输入框", 3));
         list.add(new HomeListBean("仿苹果底部弹出筛选框", 4));
@@ -90,16 +79,17 @@ public class HomeActivity extends Activity {
         list.add(new HomeListBean("仿斗鱼滑动验证码", 9));
         list.add(new HomeListBean("b站开源直播以及弹幕", 10));
         list.add(new HomeListBean("仿通讯录", 11));
-        list.add(new HomeListBean("空布局emptyLayout", 12));
+        list.add(new HomeListBean("空布局EmptyLayout", 12));
+        list.add(new HomeListBean("Duer OS智能语音体验", 13));
+        list.add(new HomeListBean("VR播放器", 14));
 
-
-//        for (int i = 'A'; i < 'Z'; i++) {
-//            HomeListBean bean = new HomeListBean((char) i);
-//        }
+        for (int i = 'A'; i < 'Z'; i++) {
+            list.add(new HomeListBean((char) i + "", i));
+        }
     }
 
+    @Override
     public void initView() {
-
         final RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
         //设置rv布局方式
         final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -175,6 +165,12 @@ public class HomeActivity extends Activity {
                     case 12:
                         startActivity(new Intent(HomeActivity.this, CategoryActivity.class));
                         break;
+                    case 13:
+//                        startActivity(new Intent(HomeActivity.this, CategoryActivity.class));
+                        break;
+                    case 14:
+                        startActivity(new Intent(HomeActivity.this, VRListActivity.class));
+                        break;
 
                     default:
                         break;
@@ -183,7 +179,7 @@ public class HomeActivity extends Activity {
 
             @Override
             public void OnItemLongClick(int Pos) {
-                LogUtil.e(TAG, "OnItemLongClick: --------------" + Pos);
+                LogUtil.e("OnItemLongClick: --------------" + Pos);
                 itemTouchHelper.startDrag(rv.getChildViewHolder(rv.getChildAt(Pos)));
             }
         });
@@ -204,6 +200,7 @@ public class HomeActivity extends Activity {
             }
         });
 
+
         refreshLayout = (TwinklingRefreshLayout) findViewById(R.id.refreshLayout);
         //更换默认head
         ProgressLayout header = new ProgressLayout(this);
@@ -221,7 +218,7 @@ public class HomeActivity extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        LogUtil.e(TAG, "run: ------下拉刷新");
+                        LogUtil.e("run: ------下拉刷新");
                         refreshLayout.finishRefreshing();
                     }
                 }, 2000);
@@ -233,7 +230,7 @@ public class HomeActivity extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        LogUtil.e(TAG, "run: ------上拉加载");
+                        LogUtil.e("run: ------上拉加载");
                         refreshLayout.finishLoadmore();
                     }
                 }, 2000);

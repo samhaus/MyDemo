@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.wangjie.androidbucket.support.cardview.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="4dp"
+    android:id="@+id/item_vr"
+    app:cardElevation="4dp"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+
+        <ImageView
+            android:id="@+id/vr_image"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_app"
+            android:layout_margin="10dp"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:layout_marginTop="10dp"
+                android:text="标题"
+                android:textColor="#de000000"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="40:20"
+                android:textColor="#8a8a8a"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_file_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="250m"
+                android:textColor="#8a8a8a"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.wangjie.androidbucket.support.cardview.CardView>

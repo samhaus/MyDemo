@@ -15,24 +15,24 @@
     <application
         android:name=".application.App"
         android:allowBackup="true"
-        android:icon="@mipmap/refresh_head_arrow"
+        android:icon="@mipmap/icon_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
         tools:overrideLibrary="com.airbnb.lottie"
         tools:replace="android:allowBackup,icon,label,theme">
         <service android:name=".WindowMgrDemo.WindowService" />
 
-        <activity android:name=".recycleView.HomeActivity">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PickViewActivity" />
-        <activity android:name=".PopuActivity" />
-        <activity android:name=".TagViewActivity" />
+        <activity android:name=".activity.PickViewActivity" />
+        <activity android:name=".activity.PopuActivity" />
+        <activity android:name=".activity.TagViewActivity" />
         <activity
             android:name=".simpletooltip.EmojiRainActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -58,14 +58,21 @@
             android:label="@string/title_activity_add_data" />
         <activity android:name=".WindowMgrDemo.WindowMgrActivity" />
         <activity android:name=".lottieDemo.LottieDemoActivity" />
-        <activity android:name=".BiliDemo.BiliActivity"></activity>
+        <activity android:name=".BiliDemo.BiliActivity" />
         <activity
             android:name=".indexListview.MainActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
-        <activity android:name=".EmptyLoadRetryDemo.test.MainActivity"></activity>
-        <activity android:name=".EmptyLoadRetryDemo.test.FragmentTestActivity"></activity>
-        <activity android:name=".EmptyLoadRetryDemo.test.AnyViewTestActivity"></activity>
-        <activity android:name=".EmptyLoadRetryDemo.test.CategoryActivity"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".emptyLoadRetryDemo.test.MainActivity" />
+        <activity android:name=".emptyLoadRetryDemo.test.FragmentTestActivity" />
+        <activity android:name=".emptyLoadRetryDemo.test.AnyViewTestActivity" />
+        <activity android:name=".emptyLoadRetryDemo.test.CategoryActivity" />
+        <activity android:name=".recycleView.HomeActivity" />
+        <activity android:name=".VRPlayerDemo.activity.VRListActivity"></activity>
+        <activity
+            android:name=".VRPlayerDemo.activity.VRPlayerActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="landscape"></activity>
+
     </application>
 
 </manifest>
