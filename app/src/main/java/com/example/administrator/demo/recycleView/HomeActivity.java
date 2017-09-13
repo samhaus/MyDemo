@@ -1,6 +1,8 @@
 package com.example.administrator.demo.recycleView;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -11,9 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.example.administrator.demo.BiliDemo.BiliActivity;
 import com.example.administrator.demo.VRPlayerDemo.activity.VRListActivity;
+import com.example.administrator.demo.activity.BatteryListenActivity;
+import com.example.administrator.demo.bean.CommonRequestBean;
+import com.example.administrator.demo.bean.TestBean;
 import com.example.administrator.demo.emptyLoadRetryDemo.test.CategoryActivity;
 import com.example.administrator.demo.activity.PickViewActivity;
 import com.example.administrator.demo.activity.PopuActivity;
@@ -24,9 +30,14 @@ import com.example.administrator.demo.base.BaseActivity;
 import com.example.administrator.demo.boomMenu.MainBoomMenuActivity;
 import com.example.administrator.demo.indexListview.MainActivity;
 import com.example.administrator.demo.lottieDemo.LottieDemoActivity;
+import com.example.administrator.demo.network.BaseObserver;
+import com.example.administrator.demo.network.MonkeyNet;
+import com.example.administrator.demo.network.RetrofitManager;
+import com.example.administrator.demo.network.RxSchedulers;
 import com.example.administrator.demo.recycleView.RvAdapter.ItemClickListener;
 import com.example.administrator.demo.simpletooltip.EmojiRainActivity;
 import com.example.administrator.demo.swipeCaptchaDemo.swipeCaptchaActivity;
+import com.example.administrator.demo.util.AppConstants;
 import com.example.administrator.demo.util.AppManager;
 import com.example.administrator.demo.util.LogUtil;
 import com.example.administrator.demo.util.RVItemTouchHelper;
@@ -35,10 +46,17 @@ import com.example.administrator.demo.util.ToastUtil;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+
 
 /**
  * 作者：LSH on 2016/12/2 0002 11:12
@@ -53,6 +71,9 @@ public class HomeActivity extends BaseActivity {
 
     private RVItemTouchHelper itemTouchHelper;
 
+    //    monkeyNet 测试
+    private MonkeyNet monkeyNet;
+
     @Override
     public int generateLayout() {
         return R.layout.activity_home;
@@ -61,6 +82,56 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        loadUpgradeInfo();
+        loadAppInfo();
+    }
+
+    private void loadUpgradeInfo() {
+//        if (upgradeInfoTv == null)
+//            return;
+
+        /***** 获取升级信息 *****/
+        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+
+        if (upgradeInfo == null) {
+            LogUtil.e("无升级信息");
+            return;
+        }
+
+        StringBuilder info = new StringBuilder();
+        info.append("id: ").append(upgradeInfo.id).append("\n");
+        info.append("标题: ").append(upgradeInfo.title).append("\n");
+        info.append("升级说明: ").append(upgradeInfo.newFeature).append("\n");
+        info.append("versionCode: ").append(upgradeInfo.versionCode).append("\n");
+        info.append("versionName: ").append(upgradeInfo.versionName).append("\n");
+        info.append("发布时间: ").append(upgradeInfo.publishTime).append("\n");
+        info.append("安装包Md5: ").append(upgradeInfo.apkMd5).append("\n");
+        info.append("安装包下载地址: ").append(upgradeInfo.apkUrl).append("\n");
+        info.append("安装包大小: ").append(upgradeInfo.fileSize).append("\n");
+        info.append("弹窗间隔（ms）: ").append(upgradeInfo.popInterval).append("\n");
+        info.append("弹窗次数: ").append(upgradeInfo.popTimes).append("\n");
+        info.append("发布类型（0:测试 1:正式）: ").append(upgradeInfo.publishType).append("\n");
+        info.append("弹窗类型（1:建议 2:强制 3:手工）: ").append(upgradeInfo.upgradeType);
+
+        LogUtil.e(info.toString());
+    }
+
+    private void loadAppInfo() {
+        try {
+            StringBuilder info = new StringBuilder();
+            PackageInfo packageInfo =
+                    this.getPackageManager().getPackageInfo(this.getPackageName(),
+                            PackageManager.GET_CONFIGURATIONS);
+            int versionCode = packageInfo.versionCode;
+            String versionName = packageInfo.versionName;
+            info.append("appid: ").append(AppConstants.BUGLY_APPID).append(" ")
+                    .append("channel: ").append(" ")
+                    .append("version: ").append(versionName).append(".").append(versionCode);
+            LogUtil.e(info.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -82,10 +153,11 @@ public class HomeActivity extends BaseActivity {
         list.add(new HomeListBean("空布局EmptyLayout", 12));
         list.add(new HomeListBean("Duer OS智能语音体验", 13));
         list.add(new HomeListBean("VR播放器", 14));
+        list.add(new HomeListBean("电源分析监听", 15));
 
-        for (int i = 'A'; i < 'Z'; i++) {
-            list.add(new HomeListBean((char) i + "", i));
-        }
+//        for (int i = 'A'; i < 'Z'; i++) {
+//            list.add(new HomeListBean((char) i + "", i));
+//        }
     }
 
     @Override
@@ -121,16 +193,31 @@ public class HomeActivity extends BaseActivity {
             public void onItemClick(int Pos) {
                 switch (list.get(Pos).getPos()) {
                     case 0:
-                        if (rv.getLayoutManager() == layoutManager) {
-                            rv.setLayoutManager(layoutManager2);
-                        } else if (rv.getLayoutManager() == layoutManager2) {
-                            rv.setLayoutManager(layoutManager3);
-                        } else if (rv.getLayoutManager() == layoutManager3) {
-                            rv.setLayoutManager(layoutManager);
-                        }
+                        monkeyNet = new MonkeyNet(HomeActivity.this);
+                        monkeyNet.initMockNet();
+                        monkeyNet.startServer();
+                        /***** 检查更新 *****/
+//                        Beta.checkUpgrade();
+//                        loadUpgradeInfo();
+
+//                        if (rv.getLayoutManager() == layoutManager) {
+//                            rv.setLayoutManager(layoutManager2);
+//                        } else if (rv.getLayoutManager() == layoutManager2) {
+//                            rv.setLayoutManager(layoutManager3);
+//                        } else if (rv.getLayoutManager() == layoutManager3) {
+//                            rv.setLayoutManager(layoutManager);
+//                        }
                         break;
                     case 1:
-                        startActivity(new Intent(HomeActivity.this, PopuActivity.class));
+                        Observable<CommonRequestBean<TestBean>> observable= RetrofitManager.build().getTest("val1","val2");
+                        observable.compose(RxSchedulers.<CommonRequestBean<TestBean>>compose()).subscribe(new BaseObserver<TestBean>() {
+                            @Override
+                            protected void onHandleSuccess(TestBean testBean) {
+                                LogUtil.e("testbean==="+testBean.toString());
+
+                            }
+                        });
+//                        startActivity(new Intent(HomeActivity.this, PopuActivity.class));
                         break;
                     case 2:
                         startActivity(new Intent(HomeActivity.this, TagViewActivity.class));
@@ -170,6 +257,9 @@ public class HomeActivity extends BaseActivity {
                         break;
                     case 14:
                         startActivity(new Intent(HomeActivity.this, VRListActivity.class));
+                        break;
+                    case 15:
+                        startActivity(new Intent(HomeActivity.this, BatteryListenActivity.class));
                         break;
 
                     default:
@@ -305,6 +395,12 @@ public class HomeActivity extends BaseActivity {
         itemTouchHelper.attachToRecyclerView(rv);
 
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     /**

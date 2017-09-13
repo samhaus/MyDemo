@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.example.administrator.demo.util.AppManager;
 import com.example.administrator.demo.util.StatusBarUtil;
 import com.example.administrator.demo.util.ToastUtil;
 import com.example.administrator.demo.util.sysbug_fix.InputMethodManagerFix;
@@ -45,6 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppManager.getAppManager().addActivity(this);
         //状态栏透明
         if (isNeedStatusBar) {
             StatusBarUtil.setTransparentForWindow(this);
@@ -120,4 +122,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getAppManager().finishActivity(this);
+    }
 }

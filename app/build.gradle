@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.administrator.demo"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -26,6 +26,13 @@ android {
 
     dataBinding {
         enabled true
+    }
+
+    packagingOptions {
+        /**
+         * 去除rxjava1版本冲突，仅保留rxjava2
+         */
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
@@ -55,27 +62,40 @@ ext {
 task pmd(type: Pmd) {
 }
 
+
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-//    realm
-    apply plugin: 'realm-android'
-
-//    lottieDemo AirBnb的动画开源库
-
-    //仿斗鱼滑动验证码
-
-    //b站开源直播框架以及弹幕等
-    //b站开源 Other ABIs: optional
-    //第三方通讯录 汉字拼音转字母筛选
-    //注释掉原有bugly的仓库
-    //compile 'com.tencent.bugly:crashreport:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.3.2
-    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
-    //vr视频播放器相关
+    //    realm
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //    apply plugin: 'realm-android'
+    //    compile 'io.realm:android-adapters:1.4.0'
+    /**
+     * lottieDemo AirBnb的动画开源库 直接把json文件解析成动画
+     */
+    //    compile 'com.airbnb.android:lottie:1.0.1'
+    /**
+     * b站开源直播+弹幕库相关
+     */
+    /**
+     * 第三方通讯录 汉字拼音转字母筛选
+     */
+    /**
+     * bugly相关
+     */
+    /**
+     * vr视频播放器相关
+     */
+    /**
+     * 网络请求部分 采用rxjava2+retrofit2
+     */
+        compile 'com.jakewharton:butterknife:8.6.0'
+    //    compile 'com.amitshekhar.android:rx2-android-networking:1.0.0'
+    /**、
+     * 用于本地搭建服务器网络接口测试模块
+     */
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.xujinyang.BiuEditText:library:1.3.0'
@@ -87,9 +107,8 @@ dependencies {
     compile 'com.luolc:emoji-rain:0.1.1'
     compile 'com.nightonke:boommenu:2.0.4'
     compile 'com.orhanobut:logger:1.15'
-    compile 'io.realm:android-adapters:1.4.0'
-    compile 'com.airbnb.android:lottie:1.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.mcxtzhang:SwipeCaptcha:V1.0.0'
     compile 'com.github.ctiao:DanmakuFlameMaster:0.6.4'
     compile 'com.github.ctiao:ndkbitmap-armv7a:0.6.4'
@@ -98,9 +117,14 @@ dependencies {
     compile 'com.belerweb:pinyin4j:2.5.1'
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.7.8.1'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.7.8.1'
     compile 'com.github.ashqal:MD360Player4Android:2.4.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.zy.mocknet:mocknet:1.0'
     testCompile 'junit:junit:4.12'
 }

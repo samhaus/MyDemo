@@ -27,19 +27,11 @@
     <string name="fragment_example">Fragment Example</string>
 
     <string name="text_inside_circle_button_text_normal">Text Inside Circle Button(Normal)</string>
-    <string name="text_inside_circle_button_text_highlighted">Text Inside Circle Button(Highlighted)</string>
-    <string name="text_inside_circle_button_text_unable">Text Inside Circle Button(Unable)</string>
 
     <string name="text_outside_circle_button_text_normal">Text Outside Circle Button(Normal)</string>
-    <string name="text_outside_circle_button_text_highlighted">Text Outside Circle Button(Highlighted)</string>
-    <string name="text_outside_circle_button_text_unable">Text Outside Circle Button(Unable)</string>
 
     <string name="text_ham_button_text_normal">Ham Button Text(Normal)</string>
-    <string name="text_ham_button_text_highlighted">Ham Button Text(Highlighted)</string>
-    <string name="text_ham_button_text_unable">Ham Button Text(Unable)</string>
     <string name="text_ham_button_sub_text_normal">Ham Button Sub Text(Normal)</string>
-    <string name="text_ham_button_sub_text_highlighted">Ham Button Sub Text(Highlighted)</string>
-    <string name="text_ham_button_sub_text_unable">Ham Button Sub Text(Unable)</string>
     <string name="title_activity_add_data">Sign in</string>
 
     <!-- Strings related to login -->
@@ -54,6 +46,7 @@
     <string name="permission_rationale">"请提供电子邮件以获取联系人权限"
     </string>
 
+    <string name="net_not_connect">连接失败，请检查您的手机是否联网</string>
     <string name="VideoView_error_text_invalid_progressive_playback">无效的连续播放</string>
     <string name="VideoView_error_text_unknown">未知错误</string>
     <string name="VideoView_error_button">OK</string>

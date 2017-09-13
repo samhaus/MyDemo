@@ -149,6 +149,7 @@ public class VRListActivity extends MvvmBaseActivity<ActivityVrListBinding> impl
                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI, mediaColumns, null, null, null);
 
         //int allVideo = cursor.getCount();
+        mVRVideoList.clear();
         while (cursor.moveToNext()) {
             VRVideo mVRVideo = new VRVideo();
             mVRVideo.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE)));

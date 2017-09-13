@@ -21,12 +21,14 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.administrator.demo.util.LogUtil;
+
 import java.lang.reflect.Method;
 import java.util.Formatter;
 import java.util.Locale;
 
 /**
- * Created by wheat7 on 26/07/2017.
+ * Created by lsh on 26/07/2017.
  */
 
 public class VRMediaController extends FrameLayout {
@@ -42,8 +44,8 @@ public class VRMediaController extends FrameLayout {
     private static final int VR_DISPLAY_MODE_GLASS = 102;
     private static final int VR_DISPLAY_MODE_NORMAL = 101;
 
-    private int interactiveMode = VR_INTERACTIVE_MODE_GYROSCOPE;
-    private int displayMode = VR_DISPLAY_MODE_GLASS;
+    private int interactiveMode = VR_INTERACTIVE_MODE_TOUCH;
+    private int displayMode = VR_DISPLAY_MODE_NORMAL;
 
     private MediaPlayerControl mPlayer;
     private final Context mContext;
@@ -580,6 +582,7 @@ public class VRMediaController extends FrameLayout {
     private void updateInteractive() {
         if (mRoot == null || mVRInteractiveModeButton == null)
             return;
+        LogUtil.e(interactiveMode+"---interactiveMode");
         if (interactiveMode == VR_INTERACTIVE_MODE_GYROSCOPE) {
             interactiveMode = VR_INTERACTIVE_MODE_TOUCH;
             mVRInteractiveModeButton.setImageResource(getResources().getIdentifier("ic_gyroscope", "drawable", mContext.getPackageName()));
@@ -593,6 +596,7 @@ public class VRMediaController extends FrameLayout {
     private void updateDisplay() {
         if (mRoot == null || mVRDisplayModeButton == null)
             return;
+        LogUtil.e(interactiveMode+"---interactiveMode");
         if (displayMode == VR_DISPLAY_MODE_GLASS) {
             displayMode = VR_DISPLAY_MODE_NORMAL;
             mVRDisplayModeButton.setImageResource(getResources().getIdentifier("ic_vr_mode", "drawable", mContext.getPackageName()));

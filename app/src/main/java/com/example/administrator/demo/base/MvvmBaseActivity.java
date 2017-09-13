@@ -16,7 +16,7 @@ import com.example.administrator.demo.util.StatusBarUtil;
 
 
 /**
- * Created by wheat7 on 05/07/2017.
+ * Created by lsh on 05/07/2017.
  */
 
 public abstract class MvvmBaseActivity<T extends ViewDataBinding> extends AppCompatActivity {

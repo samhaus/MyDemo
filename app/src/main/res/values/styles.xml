@@ -21,9 +21,9 @@
         <item name="android:textSize">@dimen/index_bar_view_text_size</item> <!--字体大小-->
     </style>
 
-    <style name="MediaController_Text">
-        <item name="android:textColor">#ffffffff</item>
-        <item name="android:textSize">14sp</item>
-        <!--<item name="android:textStyle">bold</item>-->
+    <style name="appUpdate" parent="android:Theme.Translucent.NoTitleBar.Fullscreen">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
+
 </resources>

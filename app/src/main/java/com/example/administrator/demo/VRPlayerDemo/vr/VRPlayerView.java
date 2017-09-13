@@ -20,6 +20,7 @@ import com.asha.vrlib.MD360Director;
 import com.asha.vrlib.MD360DirectorFactory;
 import com.asha.vrlib.MDVRLibrary;
 import com.asha.vrlib.model.MDPinchConfig;
+import com.example.administrator.demo.util.LogUtil;
 
 import tv.danmaku.ijk.media.player.AbstractMediaPlayer;
 
@@ -70,10 +71,10 @@ public class VRPlayerView extends FrameLayout implements VRMediaController.VRCon
     }
 
     private void initVRLibrary() {
-        // new instance
+        // new instance 默认裸眼VR可触摸模式
         mVRLibrary = MDVRLibrary.with(getContext())
-                .displayMode(MDVRLibrary.DISPLAY_MODE_GLASS)
-                .interactiveMode(MDVRLibrary.INTERACTIVE_MODE_CARDBORAD_MOTION)
+                .displayMode(MDVRLibrary.DISPLAY_MODE_NORMAL)
+                .interactiveMode(MDVRLibrary.INTERACTIVE_MODE_TOUCH)
                 .projectionMode(MDVRLibrary.PROJECTION_MODE_SPHERE)
                 .pinchConfig(new MDPinchConfig().setDefaultValue(0.7f).setMin(0.5f))
                 .pinchEnabled(true)
@@ -91,7 +92,7 @@ public class VRPlayerView extends FrameLayout implements VRMediaController.VRCon
                     }
                 })
                 .build(mGLSurfaceView);
-        mVRLibrary.setAntiDistortionEnabled(true);
+        mVRLibrary.setAntiDistortionEnabled(false);
     }
 
     public AbstractMediaPlayer getMediaPlayer() {
@@ -118,22 +119,31 @@ public class VRPlayerView extends FrameLayout implements VRMediaController.VRCon
     //控制vr显示效果 可触摸移动画面
     @Override
     public void onInteractiveClick(int currentMode) {
+        LogUtil.e("currentMode==="+currentMode);
         if (currentMode == MDVRLibrary.INTERACTIVE_MODE_CARDBORAD_MOTION) {
+            //可触摸移动画面
             mVRLibrary.switchInteractiveMode(getContext(), MDVRLibrary.INTERACTIVE_MODE_TOUCH);
+            LogUtil.e("INTERACTIVE_MODE_TOUCH===");
         } else {
+            //不可触摸移动画面
             mVRLibrary.switchInteractiveMode(getContext(), MDVRLibrary.INTERACTIVE_MODE_CARDBORAD_MOTION);
+            LogUtil.e("INTERACTIVE_MODE_CARDBORAD_MOTION===");
         }
     }
 
-    //控制vr显示效果 vr双眼模式换成全屏幕单屏模式
+    //控制vr显示效果 vr双眼模式换成全屏幕裸眼VR模式
     @Override
     public void onDisplayClick(int currentMode) {
         if (currentMode == MDVRLibrary.DISPLAY_MODE_GLASS) {
+            //全屏幕裸眼VR画面
             mVRLibrary.switchDisplayMode(getContext(), MDVRLibrary.DISPLAY_MODE_NORMAL);
             mVRLibrary.setAntiDistortionEnabled(false);
+            LogUtil.e("DISPLAY_MODE_NORMAL===");
         } else {
+            //双眼模式画面
             mVRLibrary.switchDisplayMode(getContext(), MDVRLibrary.DISPLAY_MODE_GLASS);
             mVRLibrary.setAntiDistortionEnabled(true);
+            LogUtil.e("DISPLAY_MODE_GLASS===");
         }
     }
 

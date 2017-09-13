@@ -5,18 +5,13 @@
     <color name="colorAccent">#FF4081</color>
 
     <!-- list类型的文本颜色 -->
-    <color name="rfab__color_text_label_item">#777777</color>
     <!-- 背景颜色 -->
-    <color name="rfab__color_background_normal">#ffffff</color>
-    <color name="rfab__color_background_pressed">#dddddd</color>
 
     <!-- RFAL的frame覆盖层颜色 -->
-    <color name="rfab__color_frame">#ffffff</color>
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <!-- 背景阴影颜色 -->
-    <color name="rfab__color_shadow">#c6c6c6</color>
 
     <color name="blue">#0038b8</color>
     <color name="green">#006400</color>
@@ -24,5 +19,4 @@
     <color name="maroon">#800000</color>
     <color name="navy">#000080</color>
 
-    <color name="mediacontroller_bg">#64000000</color>
 </resources>
