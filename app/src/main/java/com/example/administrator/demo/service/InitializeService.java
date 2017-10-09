@@ -3,6 +3,8 @@ package com.example.administrator.demo.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.StrictMode;
 
 import com.example.administrator.demo.R;
@@ -12,6 +14,7 @@ import com.example.administrator.demo.util.AppConstants;
 import com.example.administrator.demo.util.LogUtil;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 
 
 public class InitializeService extends IntentService {
@@ -96,4 +99,5 @@ public class InitializeService extends IntentService {
                 .penaltyDeath()
                 .build());
     }
+
 }

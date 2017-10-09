@@ -42,8 +42,7 @@ public class BatteryListener {
     }
 
 
-    private class BatteryBroadcastReceiver extends BroadcastReceiver {
-
+    public class BatteryBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null) {
@@ -51,32 +50,27 @@ public class BatteryListener {
                 switch (acyion) {
                     case Intent.ACTION_BATTERY_CHANGED://电量发生改变
                         if (mBatteryStateListener != null) {
-                            LogUtil.e("zhang", "BatteryBroadcastReceiver --> onReceive--> ACTION_BATTERY_CHANGED");
                             mBatteryStateListener.onStateChanged();
                         }
                         break;
                     case Intent.ACTION_BATTERY_LOW://电量低
                         if (mBatteryStateListener != null) {
-                            LogUtil.e("zhang", "BatteryBroadcastReceiver --> onReceive--> ACTION_BATTERY_LOW");
                             mBatteryStateListener.onStateLow();
                         }
                         break;
                     case Intent.ACTION_BATTERY_OKAY://电量充满
                         if (mBatteryStateListener != null) {
-                            LogUtil.e("zhang", "BatteryBroadcastReceiver --> onReceive--> ACTION_BATTERY_OKAY");
                             mBatteryStateListener.onStateOkay();
                         }
                         break;
                     case Intent.ACTION_POWER_CONNECTED://接通电源
                         if (mBatteryStateListener != null) {
-                            LogUtil.e("zhang", "BatteryBroadcastReceiver --> onReceive--> ACTION_POWER_CONNECTED");
                             mBatteryStateListener.onStatePowerConnected();
                         }
                         break;
 
                     case Intent.ACTION_POWER_DISCONNECTED://拔出电源
                         if (mBatteryStateListener != null) {
-                            LogUtil.e("zhang", "BatteryBroadcastReceiver --> onReceive--> ACTION_POWER_DISCONNECTED");
                             mBatteryStateListener.onStatePowerDisconnected();
                         }
                         break;

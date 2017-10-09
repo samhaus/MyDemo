@@ -9,17 +9,17 @@
 
     <ToggleButton
         android:id="@+id/tb_battery"
-        android:layout_margin="30dp"
-        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:padding="20dp" />
 
     <TextView
         android:id="@+id/tv_battery_status"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/tb_battery"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tb_battery"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp" />
 
 </RelativeLayout>

@@ -7,6 +7,7 @@ package com.example.administrator.demo.util;
 
 public class AppConstants {
     public static final String BUGLY_APPID = "ddd577cad8";//bugly appid
+    public static final String JUHE_APPKEY = "d63e31244f69341997b67b162c6b2c13";//聚合数据 appkey
 
     //login return common msg
     public static final String TOKEN = "token";

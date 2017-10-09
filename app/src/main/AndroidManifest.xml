@@ -18,6 +18,9 @@
     <!-- 保存资源到SD卡 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 唤醒、解锁屏幕 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application
         android:name=".application.App"
@@ -28,7 +31,11 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:overrideLibrary="com.airbnb.lottie"
         tools:replace="android:allowBackup,icon,label,theme">
+
+        <!--<receiver android:name=".util.BatteryListener$BatteryBroadcastReceiver"></receiver>-->
+
         <service android:name=".WindowMgrDemo.WindowService" />
+
         <service
             android:name=".service.InitializeService"
             android:exported="false" />

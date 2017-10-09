@@ -1,12 +1,14 @@
 package com.example.administrator.demo.util;
 
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyCharacterMap;
@@ -14,6 +16,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
+
+import com.example.administrator.demo.application.App;
 
 /**
  * Created by lsh on 17/08/19.
@@ -183,5 +187,17 @@ public class ScreenUtil {
         int height = resources.getDimensionPixelSize(resourceId);
         LogUtil.e("NavigationBarHeight = " + height);
         return height;
+    }
+
+    //屏幕点亮熄灭控制
+    public static void lightScreen(boolean light) {
+        //电源管理器
+        PowerManager pm = (PowerManager) App.getInstance().getSystemService(App.getInstance().POWER_SERVICE);
+        PowerManager.WakeLock mWakelock = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "SimpleTimer");
+        if (light) {
+            mWakelock.acquire();//点亮
+        } else {
+            mWakelock.release();//熄灭
+        }
     }
 }

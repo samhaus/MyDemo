@@ -1,10 +1,13 @@
 package com.example.administrator.demo.base;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.example.administrator.demo.util.AppManager;
+import com.example.administrator.demo.util.DialogUtil;
 import com.example.administrator.demo.util.StatusBarUtil;
 import com.example.administrator.demo.util.ToastUtil;
 import com.example.administrator.demo.util.sysbug_fix.InputMethodManagerFix;
@@ -42,6 +46,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected boolean isTopImg = false;//顶部是否是图片
     protected boolean isNeedStatusBar = true;
     protected boolean isNeedOrientation = true;//是否需要强制竖屏
+
+    protected ProgressDialog waitDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +87,30 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void initData(Bundle bundle);
 
     public abstract void initView();
+
+    @MainThread
+    public ProgressDialog showWaitDialog(@NonNull String message) {
+        if (waitDialog == null) {
+            waitDialog = DialogUtil.getWaitDialog(this, message);
+        }
+        if (waitDialog != null && !waitDialog.isShowing()) {
+            waitDialog.setMessage(message);
+            if (!isFinishing()) {
+                waitDialog.show();
+            }
+        }
+        return waitDialog;
+    }
+
+    @MainThread
+    public void hideWaitDialog() {
+        if (waitDialog != null && waitDialog.isShowing()) {
+            if (!isFinishing()) {
+                waitDialog.dismiss();
+                waitDialog = null;
+            }
+        }
+    }
 
 
     @Override

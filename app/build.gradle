@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -12,7 +13,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //设置支持的SO库架构
-            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi','x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
     buildTypes {
@@ -22,6 +23,11 @@ android {
         }
     }
     productFlavors {
+    }
+
+    // 配置GreenDao基本参数
+    greendao {
+        schemaVersion 1 //当前数据库版本
     }
 
     dataBinding {
@@ -91,9 +97,9 @@ dependencies {
     /**
      * 网络请求部分 采用rxjava2+retrofit2
      */
-        compile 'com.jakewharton:butterknife:8.6.0'
-    //    compile 'com.amitshekhar.android:rx2-android-networking:1.0.0'
-    /**、
+    //    compile 'com.jakewharton:butterknife:8.6.0'
+    //    compile 'com.amitshekhar.android、:rx2-android-networking:1.0.0'
+    /**
      * 用于本地搭建服务器网络接口测试模块
      */
     compile 'com.android.support:appcompat-v7:25.2.0'
@@ -125,6 +131,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.zy.mocknet:mocknet:1.0'
     testCompile 'junit:junit:4.12'
+    compile 'org.greenrobot:greendao:3.2.2'
+
 }

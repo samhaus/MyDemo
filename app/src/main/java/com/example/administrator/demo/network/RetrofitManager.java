@@ -44,8 +44,8 @@ public class RetrofitManager {
     //正式url
     private static String BASE_URL = "";
     //用于monkeyNet测试的本地url
-    public static final String URL_MAIN = "http://127.0.0.1:8088";
-    public static final String URL_TEST = URL_MAIN + "/test";
+    public static final String URL_MAIN = "http://op.juhe.cn";
+    public static final String URL_TEST = URL_MAIN + "/robot/index";
 
     private volatile static OkHttpClient mOkHttpClient;
     //缓存有效期
@@ -77,7 +77,7 @@ public class RetrofitManager {
             synchronized (RetrofitManager.class) {
                 if (mOkHttpClient == null) {
                     // 指定缓存路径,缓存大小20Mb
-                    Cache cache = new Cache(new File(App.getInstance().getCacheDir(), "ShiXiaoBao/HttpCache"),
+                    Cache cache = new Cache(new File(App.getInstance().getCacheDir(), "Samhaus/HttpCache"),
                             1024 * 1024 * 20);
                     mOkHttpClient = new OkHttpClient.Builder()
                             .cache(cache)

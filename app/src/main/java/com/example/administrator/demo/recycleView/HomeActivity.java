@@ -31,7 +31,6 @@ import com.example.administrator.demo.boomMenu.MainBoomMenuActivity;
 import com.example.administrator.demo.indexListview.MainActivity;
 import com.example.administrator.demo.lottieDemo.LottieDemoActivity;
 import com.example.administrator.demo.network.BaseObserver;
-import com.example.administrator.demo.network.MonkeyNet;
 import com.example.administrator.demo.network.RetrofitManager;
 import com.example.administrator.demo.network.RxSchedulers;
 import com.example.administrator.demo.recycleView.RvAdapter.ItemClickListener;
@@ -39,13 +38,16 @@ import com.example.administrator.demo.simpletooltip.EmojiRainActivity;
 import com.example.administrator.demo.swipeCaptchaDemo.swipeCaptchaActivity;
 import com.example.administrator.demo.util.AppConstants;
 import com.example.administrator.demo.util.AppManager;
+import com.example.administrator.demo.util.DialogUtil;
 import com.example.administrator.demo.util.LogUtil;
 import com.example.administrator.demo.util.RVItemTouchHelper;
 import com.example.administrator.demo.util.TimeUtil;
 import com.example.administrator.demo.util.ToastUtil;
+import com.example.administrator.demo.util.UIHelper;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
@@ -56,6 +58,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
+import retrofit2.Response;
 
 
 /**
@@ -71,8 +74,6 @@ public class HomeActivity extends BaseActivity {
 
     private RVItemTouchHelper itemTouchHelper;
 
-    //    monkeyNet 测试
-    private MonkeyNet monkeyNet;
 
     @Override
     public int generateLayout() {
@@ -83,57 +84,7 @@ public class HomeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loadUpgradeInfo();
-        loadAppInfo();
     }
-
-    private void loadUpgradeInfo() {
-//        if (upgradeInfoTv == null)
-//            return;
-
-        /***** 获取升级信息 *****/
-        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-
-        if (upgradeInfo == null) {
-            LogUtil.e("无升级信息");
-            return;
-        }
-
-        StringBuilder info = new StringBuilder();
-        info.append("id: ").append(upgradeInfo.id).append("\n");
-        info.append("标题: ").append(upgradeInfo.title).append("\n");
-        info.append("升级说明: ").append(upgradeInfo.newFeature).append("\n");
-        info.append("versionCode: ").append(upgradeInfo.versionCode).append("\n");
-        info.append("versionName: ").append(upgradeInfo.versionName).append("\n");
-        info.append("发布时间: ").append(upgradeInfo.publishTime).append("\n");
-        info.append("安装包Md5: ").append(upgradeInfo.apkMd5).append("\n");
-        info.append("安装包下载地址: ").append(upgradeInfo.apkUrl).append("\n");
-        info.append("安装包大小: ").append(upgradeInfo.fileSize).append("\n");
-        info.append("弹窗间隔（ms）: ").append(upgradeInfo.popInterval).append("\n");
-        info.append("弹窗次数: ").append(upgradeInfo.popTimes).append("\n");
-        info.append("发布类型（0:测试 1:正式）: ").append(upgradeInfo.publishType).append("\n");
-        info.append("弹窗类型（1:建议 2:强制 3:手工）: ").append(upgradeInfo.upgradeType);
-
-        LogUtil.e(info.toString());
-    }
-
-    private void loadAppInfo() {
-        try {
-            StringBuilder info = new StringBuilder();
-            PackageInfo packageInfo =
-                    this.getPackageManager().getPackageInfo(this.getPackageName(),
-                            PackageManager.GET_CONFIGURATIONS);
-            int versionCode = packageInfo.versionCode;
-            String versionName = packageInfo.versionName;
-            info.append("appid: ").append(AppConstants.BUGLY_APPID).append(" ")
-                    .append("channel: ").append(" ")
-                    .append("version: ").append(versionName).append(".").append(versionCode);
-            LogUtil.e(info.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public void initData(Bundle bundle) {
@@ -144,16 +95,19 @@ public class HomeActivity extends BaseActivity {
         list.add(new HomeListBean("神奇的输入框", 3));
         list.add(new HomeListBean("仿苹果底部弹出筛选框", 4));
         list.add(new HomeListBean("神奇的弹出菜单", 5));
-        list.add(new HomeListBean("数据存储Realm", 6));
+        list.add(new HomeListBean("数据库\n(未完成)", 6));
         list.add(new HomeListBean("自定义的悬浮层", 7));
-        list.add(new HomeListBean("AirBnb的开源动画库", 8));
+        list.add(new HomeListBean("AirBnb的开源动画库\n(未完成)", 8));
         list.add(new HomeListBean("仿斗鱼滑动验证码", 9));
         list.add(new HomeListBean("b站开源直播以及弹幕", 10));
-        list.add(new HomeListBean("仿通讯录", 11));
+        list.add(new HomeListBean("仿通讯录侧边栏", 11));
         list.add(new HomeListBean("空布局EmptyLayout", 12));
-        list.add(new HomeListBean("Duer OS智能语音体验", 13));
+        list.add(new HomeListBean("Duer OS智能语音体验\n(未完成)", 13));
         list.add(new HomeListBean("VR播放器", 14));
         list.add(new HomeListBean("电源分析监听", 15));
+        list.add(new HomeListBean("网络通信测试", 16));
+        list.add(new HomeListBean("检查更新", 17));
+
 
 //        for (int i = 'A'; i < 'Z'; i++) {
 //            list.add(new HomeListBean((char) i + "", i));
@@ -193,31 +147,16 @@ public class HomeActivity extends BaseActivity {
             public void onItemClick(int Pos) {
                 switch (list.get(Pos).getPos()) {
                     case 0:
-                        monkeyNet = new MonkeyNet(HomeActivity.this);
-                        monkeyNet.initMockNet();
-                        monkeyNet.startServer();
-                        /***** 检查更新 *****/
-//                        Beta.checkUpgrade();
-//                        loadUpgradeInfo();
-
-//                        if (rv.getLayoutManager() == layoutManager) {
-//                            rv.setLayoutManager(layoutManager2);
-//                        } else if (rv.getLayoutManager() == layoutManager2) {
-//                            rv.setLayoutManager(layoutManager3);
-//                        } else if (rv.getLayoutManager() == layoutManager3) {
-//                            rv.setLayoutManager(layoutManager);
-//                        }
+                        if (rv.getLayoutManager() == layoutManager) {
+                            rv.setLayoutManager(layoutManager2);
+                        } else if (rv.getLayoutManager() == layoutManager2) {
+                            rv.setLayoutManager(layoutManager3);
+                        } else if (rv.getLayoutManager() == layoutManager3) {
+                            rv.setLayoutManager(layoutManager);
+                        }
                         break;
                     case 1:
-                        Observable<CommonRequestBean<TestBean>> observable= RetrofitManager.build().getTest("val1","val2");
-                        observable.compose(RxSchedulers.<CommonRequestBean<TestBean>>compose()).subscribe(new BaseObserver<TestBean>() {
-                            @Override
-                            protected void onHandleSuccess(TestBean testBean) {
-                                LogUtil.e("testbean==="+testBean.toString());
-
-                            }
-                        });
-//                        startActivity(new Intent(HomeActivity.this, PopuActivity.class));
+                        startActivity(new Intent(HomeActivity.this, PopuActivity.class));
                         break;
                     case 2:
                         startActivity(new Intent(HomeActivity.this, TagViewActivity.class));
@@ -260,6 +199,13 @@ public class HomeActivity extends BaseActivity {
                         break;
                     case 15:
                         startActivity(new Intent(HomeActivity.this, BatteryListenActivity.class));
+                        break;
+                    case 16:
+                        netTest();
+                        break;
+                    case 17:
+                        /***** 检查更新 *****/
+                        Beta.checkUpgrade();
                         break;
 
                     default:
@@ -397,6 +343,21 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+
+    //使用聚合数据API测试网络通信模块
+    private void netTest() {
+        Observable<CommonRequestBean<TestBean>> observable =
+                RetrofitManager.build().getTest("明天杭州天气如何");
+        observable.compose(RxSchedulers.<CommonRequestBean<TestBean>>compose())
+                .subscribe(new BaseObserver<TestBean>() {
+                    @Override
+                    protected void onHandleSuccess(TestBean testBean) {
+
+                        LogUtil.e("TestBean===" + testBean.toString());
+
+                    }
+                });
+    }
 
     @Override
     protected void onDestroy() {

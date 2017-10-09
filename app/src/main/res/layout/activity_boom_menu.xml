@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.nightonke.boommenusample.MainActivity">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,91 +21,106 @@
                 android:id="@+id/simple_circle_button_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/simple_circle_button_example" />
+                android:text="@string/simple_circle_button_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/text_inside_circle_button_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_inside_circle_button_example" />
+                android:text="@string/text_inside_circle_button_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/text_outside_circle_button_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_outside_circle_button_example" />
+                android:text="@string/text_outside_circle_button_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/ham_button_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ham_button_example" />
+                android:text="@string/ham_button_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/boom_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/boom_example" />
+                android:text="@string/boom_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/button_place_alignment_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_place_alignment_example" />
+                android:text="@string/button_place_alignment_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/order_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/order_example" />
+                android:text="@string/order_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/actionbar_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/actionbar_example" />
+                android:text="@string/actionbar_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/ease_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ease_example" />
+                android:text="@string/ease_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/listener_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/listener_example" />
+                android:text="@string/listener_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/control_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/control_example" />
+                android:text="@string/control_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/share_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/share_example" />
+                android:text="@string/share_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/list_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/list_example" />
+                android:text="@string/list_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/recycler_view_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/recycler_view_example" />
+                android:text="@string/recycler_view_example"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/fragment_example"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_example" />
+                android:text="@string/fragment_example"
+                android:textAllCaps="false" />
 
         </LinearLayout>
 

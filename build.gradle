@@ -12,8 +12,9 @@ buildscript {
 
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
 
-        classpath "io.realm:realm-gradle-plugin:2.2.1"
+//        classpath "io.realm:realm-gradle-plugin:2.2.1"
     }
 }
 

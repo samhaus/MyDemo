@@ -7,10 +7,10 @@ import android.view.View;
 
 import com.example.administrator.demo.R;
 
-/*
-* 多种弹出菜单  非常酷炫
-* https://github.com/Nightonke/BoomMenu
-* */
+/**
+ * 多种弹出菜单  非常酷炫
+ * https://github.com/Nightonke/BoomMenu
+ */
 public class MainBoomMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -60,7 +60,7 @@ public class MainBoomMenuActivity extends AppCompatActivity implements View.OnCl
                 startActivity(new Intent(this, OrderExampleActivity.class));
                 break;
             case R.id.actionbar_example:
-                startActivity(new Intent(this, ActionBarActivity.class));
+//                startActivity(new Intent(this, ActionBarActivity.class));
                 break;
             case R.id.ease_example:
                 startActivity(new Intent(this, EaseActivity.class));

@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable;
  * RxJava Observable订阅需要传入一个观察者对象，此处封装一个BaseObserver
  */
 
-public abstract class BaseObserver <T> implements Observer<CommonRequestBean<T>> {
+public abstract class BaseObserver<T> implements Observer<CommonRequestBean<T>> {
 
     private static final String TAG = "BaseObserver";
 
@@ -31,11 +31,12 @@ public abstract class BaseObserver <T> implements Observer<CommonRequestBean<T>>
 
     @Override
     public void onNext(CommonRequestBean<T> value) {
-        if (value.isSuccess()) {
-            T t = value.getData();
+        LogUtil.e("onNext-----"+value.toString());
+        if (value.getResult()!=null && value.getError_code() == 0) {
+            T t = value.getResult();
             onHandleSuccess(t);
         } else {
-            onHandleError(value.getMsg());
+            onHandleError(value.getReason());
         }
     }
 
@@ -55,6 +56,7 @@ public abstract class BaseObserver <T> implements Observer<CommonRequestBean<T>>
 
     protected void onHandleError(String msg) {
         ToastUtil.show(msg);
+        LogUtil.e(msg);
     }
 
 }
